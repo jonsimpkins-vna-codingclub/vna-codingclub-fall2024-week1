@@ -43,6 +43,10 @@ h1 {
     margin: 24px auto;
 }
 
+.mad-libs-line {
+    margin: 32px 0;
+}
+
 /* Style for any word in the Mad Libs */
 .mad-libs-word {
     font-family: monospace;

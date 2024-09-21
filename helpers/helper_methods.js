@@ -27,8 +27,6 @@ function sayHello() {
 }
 
 
-let exampleMadLib = 'My name is {{name}}! I am feeling {{feeling}} about learning to code.';
-
 // Let's define what the ID of the section
 // is for the mad libs section
 let MAD_LIBS_SECTION_ID = 'mad-libs-section';
@@ -63,17 +61,37 @@ function startMadLibs() {
     let madLibsSection = document.getElementById(MAD_LIBS_SECTION_ID);
     madLibsSection.innerHTML = '';
 
-    // Split up the mad lib into words,
+    // Split up the mad lib into lines,
     // so we can do a cool animation.
-    let remainingWords = splitMadLibsTemplate(exampleMadLib);
+    let templateLines = getMadLibsTemplate().split('\n');
 
-    showNextWord(madLibsSection, remainingWords);
+    showNextLine(madLibsSection, templateLines);
+}
+
+function showNextLine(madLibsSection, lines) {
+    // Add a section for the next line
+    let madLibsLine = document.createElement('div');
+    madLibsLine.classList.add('mad-libs-line');
+    madLibsSection.appendChild(madLibsLine);
+
+    let wordsInLine = splitMadLibsTemplate(lines[0]);
+
+    // Show all the words in the line, then draw the next line
+    showNextWord(madLibsLine, wordsInLine, () => {
+        if (lines.length == 1) {
+            // That was the last line, all done!
+            return;
+        }
+
+        let remainingLines = lines.slice(1);
+        showNextLine(madLibsSection, remainingLines);
+    });
 }
 
 // Helper method to show the next word in the list.
 //
 // This lets us sort of animate the words onto the page.
-function showNextWord(madLibsSection, remainingWords) {
+function showNextWord(madLibsSection, remainingWords, finalCallback) {
     // Create a span for the word
     let nextWord = document.createElement('span');
     nextWord.classList.add('mad-libs-word');
@@ -95,24 +113,26 @@ function showNextWord(madLibsSection, remainingWords) {
     }
     madLibsSection.appendChild(nextWord);
 
-    if (remainingWords.length == 1) {
-        // That was the last word! 
-        // Return early.
-        return;
-    }
-
-    // This makes a copy of the remaining words,
-    // skipping the first one (since we just showed
-    // that one).
-    let newRemainingWords = remainingWords.slice(1);
-
-    // Wait 250 ms, and then show the next word
+    // Wait 200 ms, to get an animated effect
     setTimeout(() => {
+
+        if (remainingWords.length == 1) {
+            // That was the last word! 
+            // Return early.
+            finalCallback();
+            return;
+        }
+
+        // This makes a copy of the remaining words,
+        // skipping the first one (since we just showed
+        // that one).
+        let newRemainingWords = remainingWords.slice(1);
+
         // Hey, the `showNextWord` method is calling
         // itself! This is called "Recursion", we'll
         // cover it later in the semester.
-        showNextWord(madLibsSection, newRemainingWords)
-    }, 250);
+        showNextWord(madLibsSection, newRemainingWords, finalCallback);
+    }, 200);
 }
 
 // Helper method to replace words in the Mad Lib
@@ -186,9 +206,24 @@ function splitMadLibsTemplate(madLibsTemplate) {
 // Helper method to load the step 0 - step N scripts
 // dynamically on the page, after the DOM is ready.
 function documentReady() {
-    for (let step = 0; step < 2; step++) {
+    for (let step = 0; step < 4; step++) {
         let scriptEl = document.createElement( 'script' );
         scriptEl.setAttribute( 'src', 'step_' + step + '.js' );
         document.body.appendChild( scriptEl );
     }
+}
+
+
+// Helpers for getting random values
+function getRandomBoolean() {
+    return Math.random() > 0.5;
+}
+
+function getRandomInteger() {
+    return Math.round(Math.random * 10);
+}
+
+function getRandomString(stringList) {
+    let randomIndex = Math.floor(Math.random() * stringList.length);
+    return stringList[randomIndex];
 }

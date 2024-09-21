@@ -2,10 +2,10 @@
 // Step 1: Let's set up the Mad Libs game
 // by filling in the blanks:
 
-// What is your name?
-let name = 'Jon'; 
+// TODO: What is your name?
+let name = null; 
 
-// How are you feeling about
-// the coding club?
+// TODO: How are you feeling about
+// the coding club? excited? curious?
 let feeling = null;
 
