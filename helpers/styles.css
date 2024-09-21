@@ -1,0 +1,70 @@
+
+/** Style for the page body
+  * (the wrapper around all the other stuff)
+*/
+body {
+    margin: 0;
+}
+
+/** Style for the page header */
+h1 {
+    text-align: center;
+    background-color: darkblue;
+    color: white;
+    padding: 16px;
+}
+
+/** Style for the "Hello World" message in Step 0 */
+.hello-msg {
+    text-align: center;
+    font-size: 32px;
+}
+
+/** Style for the "start" button in Step 1 */
+.start-btn {
+    text-align: center;
+    display: block;
+    margin: 12px auto;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: lightblue;
+    border: 1px solid black;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/** Style for the area where all the words
+  * in the mad libs section.
+  */
+.mad-libs-section {
+    display: block;
+    width: 600px;
+    margin: 24px auto;
+}
+
+/* Style for any word in the Mad Libs */
+.mad-libs-word {
+    font-family: monospace;
+    font-size: 18px;
+    padding: 12px 3px;
+}
+
+/* Style for words in the Mad Libs that
+ * were replaced by variables.
+ */
+.mad-lib-variable {
+    border-radius: 12px;
+    padding: 12px 8px;
+}
+
+/* Color for variables missing a value */
+.invalid {
+    background-color: salmon;
+    cursor: pointer;
+}
+
+/* Color for variable with a value.*/
+.valid {
+    background-color: lightgreen;
+}
